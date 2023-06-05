@@ -73,7 +73,7 @@ pub fn main() {
     };
     println!("PORT: {}", port);
 
-    let addr = "0.0.0.0:7878";
+    let addr = format!("0.0.0.0:{}", port);
     println!("Listening for requests at http://{}", addr);
     gotham::start(addr, router()).unwrap();
 }
