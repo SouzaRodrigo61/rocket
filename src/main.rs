@@ -67,14 +67,16 @@ fn router() -> Router {
 /// Start a server and use a `Router` to dispatch requests
 pub fn main() {
 
+    // install global collector configured based on RUST_LOG env var.
+    tracing_subscriber::fmt::init();
+
     let port = match env::var_os("PORT") {
         Some(v) => v.into_string().unwrap(),
-        None => "7878".to_owned()
+        None => "9898".to_owned()
     };
-    println!("PORT: {}", port);
 
     let addr = format!("0.0.0.0:{}", port);
-    println!("Listening for requests at http://{}", addr);
+//    info!("Listening for requests at http://{}", addr);
     gotham::start(addr, router()).unwrap();
 }
 
