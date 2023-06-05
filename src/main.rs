@@ -1,5 +1,7 @@
 //!  An example of the Gotham web framework `Router` that shows how to combine `Routes`
 //!  under a common root using scopes.
+use std::env;
+
 use gotham::hyper::Method;
 use gotham::prelude::*;
 use gotham::router::{build_simple_router, Router};
@@ -64,7 +66,14 @@ fn router() -> Router {
 
 /// Start a server and use a `Router` to dispatch requests
 pub fn main() {
-    let addr = "127.0.0.1:7878";
+
+    let port = match env::var_os("PORT") {
+        Some(v) => v.into_string().unwrap(),
+        None => "7878".to_owned()
+    };
+    println!("PORT: {}", port);
+
+    let addr = "0.0.0.0:7878";
     println!("Listening for requests at http://{}", addr);
     gotham::start(addr, router()).unwrap();
 }
